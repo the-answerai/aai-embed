@@ -1,26 +1,52 @@
 
-> aai-embed@1.3.14 build /Users/bradtaylor/Documents/GitHub/Flowise/packages/embed
-> rollup --config rollup.config.js
+> aai-embed@3.0.5-alpha.7 build /home/max/dev/theanswer/packages/embed
+> cross-env NODE_ENV=production rollup --config rollup.config.js
 
 [36m
 [1m./src/web.ts[22m → [1mdist/web.js, ../../apps/web/public/embed/dist/web.js[22m...[39m
 Browserslist: caniuse-lite is outdated. Please run:
   npx update-browserslist-db@latest
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
-[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS2769: No overload matches this call.
-  Overload 1 of 3, '(value: (prev: string) => string): string', gave the following error.
-    Argument of type 'string | undefined' is not assignable to parameter of type '(prev: string) => string'.
-      Type 'undefined' is not assignable to type '(prev: string) => string'.
-  Overload 2 of 3, '(value: string): string', gave the following error.
-    Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
-      Type 'undefined' is not assignable to type 'string'.
-  Overload 3 of 3, '(value: string | ((prev: string) => string)): string', gave the following error.
-    Argument of type 'string | undefined' is not assignable to parameter of type 'string | ((prev: string) => string)'.
-      Type 'undefined' is not assignable to type 'string | ((prev: string) => string)'.[39m[22m
-[1msrc/components/Bot.tsx: (750:27)[22m
-[90m
-[7m750[0m       setSocketIOClientId(socket.id);
-[7m   [0m [91m                          ~~~~~~~~~[0m
 
-[39m
-[32mcreated [1mdist/web.js, ../../apps/web/public/embed/dist/web.js[22m in [1m12.3s[22m[39m
+
+Source path: /home/max/dev/theanswer/packages/embed/src/assets/index.css
+Setting up new context...
+Finding changed files: 4.748ms
+Reading changed files: 31.093ms
+Sorting candidates: 3.05ms
+Generate rules: 66.411ms
+Build stylesheet: 2.602ms
+Potential classes:  4248
+Active contexts:  1
+JIT TOTAL: 351.768ms
+
+
+
+
+Source path: /home/max/dev/theanswer/packages/embed/src/components/treeview/TreeView.css
+JIT TOTAL: 0.716ms
+
+
+[32mcreated [1mdist/web.js, ../../apps/web/public/embed/dist/web.js[22m in [1m23.8s[22m[39m
+[36m
+[1m./src/web.ts[22m → [1mdist/web.umd.js[22m...[39m
+
+
+Source path: /home/max/dev/theanswer/packages/embed/src/assets/index.css
+Finding changed files: 1.885ms
+Reading changed files: 0.004ms
+Sorting candidates: 0.004ms
+Generate rules: 0.143ms
+Build stylesheet: 0.002ms
+Potential classes:  1
+Active contexts:  1
+JIT TOTAL: 15.483ms
+
+
+
+
+Source path: /home/max/dev/theanswer/packages/embed/src/components/treeview/TreeView.css
+JIT TOTAL: 0.464ms
+
+
+[32mcreated [1mdist/web.umd.js[22m in [1m10.1s[22m[39m

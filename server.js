@@ -22,12 +22,12 @@ const FLOWISE_API_KEY = process.env.FLOWISE_API_KEY;
 
 if (!API_HOST) {
   console.error('API_HOST is not set in environment variables');
-  process.exit(1);
+  // process.exit(1);
 }
 
 if (!FLOWISE_API_KEY) {
   console.error('FLOWISE_API_KEY is not set in environment variables');
-  process.exit(1);
+  // process.exit(1);
 }
 
 const parseChatflows = () => {
