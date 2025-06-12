@@ -5,6 +5,7 @@ type Props = {
     chatflowid: string;
     chatId: string;
     apiHost?: string;
+    apiKey?: string;
     onRequest?: (request: RequestInit) => Promise<void>;
     fileAnnotations?: any;
     showAvatar?: boolean;

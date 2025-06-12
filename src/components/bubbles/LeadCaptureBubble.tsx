@@ -12,6 +12,7 @@ type Props = {
   chatId: string;
   leadsConfig?: LeadsConfig;
   apiHost?: string;
+  apiKey?: string;
   showAvatar?: boolean;
   avatarSrc?: string;
   backgroundColor?: string;
@@ -59,6 +60,7 @@ export const LeadCaptureBubble = (props: Props) => {
 
       const result = await addLeadQuery({
         apiHost: props.apiHost,
+        apiKey: props.apiKey,
         body,
       });
 

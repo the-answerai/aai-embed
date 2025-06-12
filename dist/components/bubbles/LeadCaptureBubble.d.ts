@@ -5,6 +5,7 @@ type Props = {
     chatId: string;
     leadsConfig?: LeadsConfig;
     apiHost?: string;
+    apiKey?: string;
     showAvatar?: boolean;
     avatarSrc?: string;
     backgroundColor?: string;

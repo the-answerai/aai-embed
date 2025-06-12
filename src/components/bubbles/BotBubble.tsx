@@ -16,6 +16,7 @@ type Props = {
   chatflowid: string;
   chatId: string;
   apiHost?: string;
+  apiKey?: string;
   onRequest?: (request: RequestInit) => Promise<void>;
   fileAnnotations?: any;
   showAvatar?: boolean;
@@ -118,6 +119,7 @@ export const BotBubble = (props: Props) => {
     try {
       const response = await sendFileDownloadQuery({
         apiHost: props.apiHost,
+        apiKey: props.apiKey,
         body: { fileName: fileAnnotation.fileName, chatflowId: props.chatflowid, chatId: props.chatId } as any,
         onRequest: props.onRequest,
       });
@@ -199,6 +201,7 @@ export const BotBubble = (props: Props) => {
         apiHost: props.apiHost,
         body,
         onRequest: props.onRequest,
+        apiKey: props.apiKey,
       });
 
       if (result.data) {
@@ -229,6 +232,7 @@ export const BotBubble = (props: Props) => {
         apiHost: props.apiHost,
         body,
         onRequest: props.onRequest,
+        apiKey: props.apiKey,
       });
 
       if (result.data) {
@@ -254,6 +258,7 @@ export const BotBubble = (props: Props) => {
       apiHost: props.apiHost,
       body,
       onRequest: props.onRequest,
+      apiKey: props.apiKey,
     });
 
     if (result.data) {
@@ -423,6 +428,7 @@ export const BotBubble = (props: Props) => {
                       textColor={props.textColor}
                       fontSize={props.fontSize}
                       apiHost={props.apiHost}
+                      apiKey={props.apiKey}
                       chatflowid={props.chatflowid}
                       chatId={props.chatId}
                       renderHTML={props.renderHTML}

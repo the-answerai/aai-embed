@@ -9,6 +9,7 @@ const defaultIconColor = 'white';
 export type FullProps = BotProps & BubbleParams;
 
 export const Full = (props: FullProps, { element }: { element: HTMLElement }) => {
+  console.log('[Full]', { props });
   const [isBotDisplayed, setIsBotDisplayed] = createSignal(false);
 
   const launchBot = () => {
@@ -86,6 +87,7 @@ export const Full = (props: FullProps, { element }: { element: HTMLElement }) =>
             chatflowid={props.chatflowid}
             chatflowConfig={props.chatflowConfig}
             apiHost={props.apiHost}
+            apiKey={props.apiKey}
             onRequest={props.onRequest}
             isFullPage={true}
             observersConfig={props.observersConfig}

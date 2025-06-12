@@ -7,6 +7,7 @@ import { AttachmentIcon } from '../icons';
 type Props = {
   message: MessageType;
   apiHost?: string;
+  apiKey?: string;
   chatflowid: string;
   chatId: string;
   showAvatar?: boolean;

@@ -139,6 +139,7 @@ export type observersConfigType = Record<'observeUserInput' | 'observeLoading' |
 export type BotProps = {
   chatflowid: string;
   apiHost?: string;
+  apiKey?: string;
   onRequest?: (request: RequestInit) => Promise<void>;
   chatflowConfig?: Record<string, unknown>;
   sourceBubble?: {
@@ -794,7 +795,8 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
     const chatId = params.chatId;
     const input = params.question;
     params.streaming = true;
-    const token = sessionStorage.getItem('access_token');
+    console.log('[fetchResponseFromEventStream]', { botProps, params, chatflowid, props });
+    const token = botProps?.apiKey ?? sessionStorage.getItem('access_token');
     fetchEventSource(`${props.apiHost}/api/v1/prediction/${chatflowid}`, {
       openWhenHidden: true,
       method: 'POST',
@@ -925,6 +927,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
         const response = await createAttachmentWithFormData({
           chatflowid: props.chatflowid,
           apiHost: props.apiHost,
+          apiKey: props.apiKey,
           formData: formData,
         });
 
@@ -962,6 +965,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
         const response = await upsertVectorStoreWithFormData({
           chatflowid: props.chatflowid,
           apiHost: props.apiHost,
+          apiKey: props.apiKey,
           formData: formData,
         });
 
@@ -1056,6 +1060,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
       const result = await sendMessageQuery({
         chatflowid: props.chatflowid,
         apiHost: props.apiHost,
+        apiKey: props.apiKey,
         body,
         onRequest: props.onRequest,
       });
@@ -1308,6 +1313,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
     const { data } = await isStreamAvailableQuery({
       chatflowid: props.chatflowid,
       apiHost: props.apiHost,
+      apiKey: props.apiKey,
       onRequest: props.onRequest,
     });
 
@@ -1319,6 +1325,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
     const result = await getChatbotConfig({
       chatflowid: props.chatflowid,
       apiHost: props.apiHost,
+      apiKey: props.apiKey,
       onRequest: props.onRequest,
     });
 
@@ -1836,6 +1843,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                         <GuestBubble
                           message={message}
                           apiHost={props.apiHost}
+                          apiKey={props.apiKey}
                           chatflowid={props.chatflowid}
                           chatId={chatId()}
                           backgroundColor={props.userMessage?.backgroundColor}
@@ -1853,6 +1861,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                           chatflowid={props.chatflowid}
                           chatId={chatId()}
                           apiHost={props.apiHost}
+                          apiKey={props.apiKey}
                           backgroundColor={props.botMessage?.backgroundColor}
                           textColor={props.botMessage?.textColor}
                           feedbackColor={props.feedback?.color}
@@ -1878,6 +1887,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                           chatflowid={props.chatflowid}
                           chatId={chatId()}
                           apiHost={props.apiHost}
+                          apiKey={props.apiKey}
                           backgroundColor={props.botMessage?.backgroundColor}
                           textColor={props.botMessage?.textColor}
                           fontSize={props.fontSize}

@@ -1,7 +1,10 @@
+Debugger attached.
 
 > aai-embed@3.0.5-alpha.7 build /home/max/dev/theanswer/packages/embed
 > cross-env NODE_ENV=production rollup --config rollup.config.js
 
+Debugger attached.
+Debugger attached.
 [36m
 [1m./src/web.ts[22m → [1mdist/web.js, ../../apps/web/public/embed/dist/web.js[22m...[39m
 Browserslist: caniuse-lite is outdated. Please run:

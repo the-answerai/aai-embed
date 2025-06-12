@@ -13,6 +13,7 @@ export type IncomingInput = {
 };
 type BaseRequest = {
     apiHost?: string;
+    apiKey?: string;
     onRequest?: (request: RequestInit) => Promise<void>;
 };
 export type MessageRequest = BaseRequest & {
@@ -37,6 +38,7 @@ export type UpdateFeedbackRequest = BaseRequest & {
 export type UpsertRequest = BaseRequest & {
     chatflowid: string;
     apiHost?: string;
+    apiKey?: string;
     formData: FormData;
 };
 export type LeadCaptureInput = {
@@ -49,39 +51,39 @@ export type LeadCaptureInput = {
 export type LeadCaptureRequest = BaseRequest & {
     body: Partial<LeadCaptureInput>;
 };
-export declare const sendFeedbackQuery: ({ chatflowid, apiHost, body, onRequest }: CreateFeedbackRequest) => Promise<{
+export declare const sendFeedbackQuery: ({ chatflowid, apiHost, body, onRequest, apiKey }: CreateFeedbackRequest) => Promise<{
     data?: unknown;
     error?: Error | undefined;
 }>;
-export declare const updateFeedbackQuery: ({ id, apiHost, body, onRequest }: UpdateFeedbackRequest) => Promise<{
+export declare const updateFeedbackQuery: ({ id, apiHost, body, onRequest, apiKey }: UpdateFeedbackRequest) => Promise<{
     data?: unknown;
     error?: Error | undefined;
 }>;
-export declare const sendMessageQuery: ({ chatflowid, apiHost, body, onRequest }: MessageRequest) => Promise<{
+export declare const sendMessageQuery: ({ chatflowid, apiHost, body, onRequest, apiKey }: MessageRequest) => Promise<{
     data?: any;
     error?: Error | undefined;
 }>;
-export declare const createAttachmentWithFormData: ({ chatflowid, apiHost, formData, onRequest }: UpsertRequest) => Promise<{
+export declare const createAttachmentWithFormData: ({ chatflowid, apiHost, formData, onRequest, apiKey }: UpsertRequest) => Promise<{
     data?: unknown;
     error?: Error | undefined;
 }>;
-export declare const upsertVectorStoreWithFormData: ({ chatflowid, apiHost, formData, onRequest }: UpsertRequest) => Promise<{
+export declare const upsertVectorStoreWithFormData: ({ chatflowid, apiHost, formData, onRequest, apiKey }: UpsertRequest) => Promise<{
     data?: unknown;
     error?: Error | undefined;
 }>;
-export declare const getChatbotConfig: ({ chatflowid, apiHost, onRequest }: MessageRequest) => Promise<{
+export declare const getChatbotConfig: ({ chatflowid, apiHost, onRequest, apiKey }: MessageRequest) => Promise<{
     data?: any;
     error?: Error | undefined;
 }>;
-export declare const isStreamAvailableQuery: ({ chatflowid, apiHost, onRequest }: MessageRequest) => Promise<{
+export declare const isStreamAvailableQuery: ({ chatflowid, apiHost, onRequest, apiKey }: MessageRequest) => Promise<{
     data?: any;
     error?: Error | undefined;
 }>;
-export declare const sendFileDownloadQuery: ({ apiHost, body, onRequest }: MessageRequest) => Promise<{
+export declare const sendFileDownloadQuery: ({ apiHost, body, onRequest, apiKey }: MessageRequest) => Promise<{
     data?: any;
     error?: Error | undefined;
 }>;
-export declare const addLeadQuery: ({ apiHost, body, onRequest }: LeadCaptureRequest) => Promise<{
+export declare const addLeadQuery: ({ apiHost, body, onRequest, apiKey }: LeadCaptureRequest) => Promise<{
     data?: any;
     error?: Error | undefined;
 }>;

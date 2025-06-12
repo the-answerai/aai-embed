@@ -83,6 +83,7 @@ export type observersConfigType = Record<'observeUserInput' | 'observeLoading' |
 export type BotProps = {
     chatflowid: string;
     apiHost?: string;
+    apiKey?: string;
     onRequest?: (request: RequestInit) => Promise<void>;
     chatflowConfig?: Record<string, unknown>;
     sourceBubble?: {

@@ -30,7 +30,7 @@ const FeedbackContentDialog = (props: FeedbackContentDialogProps) => {
 
   return (
     <>
-      <div class="flex overflow-x-hidden overflow-y-auto fixed inset-0 z-[1002] outline-none focus:outline-none justify-center items-center feedback-dialog-root">
+      <div class="flex overflow-x-hidden overflow-y-auto fixed inset-0 z-[1002] outline-none focus:outline-none justify-center items-center feedback-content-dialog">
         <div class="relative w-full my-6 max-w-3xl mx-4">
           <div
             class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"

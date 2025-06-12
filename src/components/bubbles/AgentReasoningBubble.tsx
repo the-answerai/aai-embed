@@ -5,6 +5,7 @@ import { cloneDeep } from 'lodash';
 
 type Props = {
   apiHost?: string;
+  apiKey?: string;
   chatflowid: string;
   chatId: string;
   agentName: string;
