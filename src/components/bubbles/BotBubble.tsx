@@ -138,12 +138,12 @@ export const BotBubble = (props: Props) => {
     try {
       const domElement = botMessageElement();
       const text = domElement?.textContent?.trim() || '';
-      
+
       if (!text) {
         console.warn('No text content found to copy');
         return;
       }
-      
+
       // Try modern clipboard API first
       if (navigator.clipboard && navigator.clipboard.writeText) {
         await navigator.clipboard.writeText(text);
@@ -157,15 +157,15 @@ export const BotBubble = (props: Props) => {
         document.body.appendChild(textArea);
         textArea.focus();
         textArea.select();
-        
+
         const successful = document.execCommand('copy');
         document.body.removeChild(textArea);
-        
+
         if (!successful) {
           throw new Error('Fallback clipboard copy failed');
         }
       }
-      
+
       setCopiedMessage(true);
       setTimeout(() => setCopiedMessage(false), 2000);
     } catch (error) {
