@@ -136,7 +136,7 @@ export const BotBubble = (props: Props) => {
 
   const copyMessageToClipboard = async () => {
     try {
-      const text = botMessageElement() ? botMessageElement()?.textContent : '';
+      const text = props.message.message;
       await navigator.clipboard.writeText(text || '');
       setCopiedMessage(true);
       setTimeout(() => {
