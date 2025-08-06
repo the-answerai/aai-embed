@@ -137,11 +137,13 @@ export const BotBubble = (props: Props) => {
   const copyMessageToClipboard = async () => {
     try {
       // Use the original message text (preserves markdown) as primary source
-      const text = props.message.message || (() => {
-        // Fallback to DOM text content if message is not available
-        const domElement = botMessageElement();
-        return domElement?.textContent?.trim() || '';
-      })();
+      const text =
+        props.message.message ||
+        (() => {
+          // Fallback to DOM text content if message is not available
+          const domElement = botMessageElement();
+          return domElement?.textContent?.trim() || '';
+        })();
 
       if (!text) {
         console.warn('No text content found to copy');
