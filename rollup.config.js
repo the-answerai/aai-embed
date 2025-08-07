@@ -41,19 +41,18 @@ const indexConfig = {
     typescript(),
     typescriptPaths({ preserveExtensions: true }),
     terser({ output: { comments: false } }),
-    // Temporarily disabled due to compatibility issue
-    // ...(isDev
-    //   ? [
-    //       serve({
-    //         open: true,
-    //         verbose: true,
-    //         contentBase: ['dist', 'public'],
-    //         host: 'localhost',
-    //         port: 5678,
-    //       }),
-    //       livereload({ watch: 'dist' }),
-    //     ]
-    //   : []), // Add serve/livereload only in development
+    ...(isDev
+      ? [
+          serve({
+            open: true,
+            verbose: true,
+            contentBase: ['dist', 'public'],
+            host: 'localhost',
+            port: 5678,
+          }),
+          livereload({ watch: 'dist' }),
+        ]
+      : []), // Add serve/livereload only in development
   ],
 };
 
