@@ -145,11 +145,11 @@ importers:
         specifier: 4.0.2
         version: 4.0.2(postcss@8.5.6)
       rollup-plugin-serve:
-        specifier: 2.0.2
-        version: 2.0.2
+        specifier: 3.0.0
+        version: 3.0.0
       rollup-plugin-typescript-paths:
-        specifier: 1.4.0
-        version: 1.4.0(typescript@5.0.3)
+        specifier: 1.5.0
+        version: 1.5.0(typescript@5.0.3)
       tailwindcss:
         specifier: ^3.3.1
         version: 3.3.1(postcss@8.5.6)
@@ -2493,11 +2493,11 @@ packages:
     peerDependencies:
       postcss: 8.x
 
-  rollup-plugin-serve@2.0.2:
-    resolution: {integrity: sha512-ALqyTbPhlf7FZ5RzlbDvMYvbKuCHWginJkTo6dMsbgji/a78IbsXox+pC83HENdkTRz8OXrTj+aShp3+3ratpg==}
+  rollup-plugin-serve@3.0.0:
+    resolution: {integrity: sha512-DjVRhbwC0OgP1Q1sj8Lvx12ee60UTZM767kkjT61sYKHw/wLpANAw3VZN5ZMa5NlvO8bYpfTaqiUrW+icAjXFg==}
 
-  rollup-plugin-typescript-paths@1.4.0:
-    resolution: {integrity: sha512-6EgeLRjTVmymftEyCuYu91XzY5XMB5lR0YrJkeT0D7OG2RGSdbNL+C/hfPIdc/sjMa9Sl5NLsxIr6C/+/5EUpA==}
+  rollup-plugin-typescript-paths@1.5.0:
+    resolution: {integrity: sha512-zly2aiGNjYJNq5YUi6eyGrQnCYUQ8b5czOtHZIGriwG9U3Ba2F9hlSklafXCdsNulK/IlNmE0Kzj0h+fVV32pA==}
     peerDependencies:
       typescript: '>=3.4'
 
@@ -5520,12 +5520,12 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  rollup-plugin-serve@2.0.2:
+  rollup-plugin-serve@3.0.0:
     dependencies:
       mime: 4.0.7
       opener: 1.5.2
 
-  rollup-plugin-typescript-paths@1.4.0(typescript@5.0.3):
+  rollup-plugin-typescript-paths@1.5.0(typescript@5.0.3):
     dependencies:
       typescript: 5.0.3
 
