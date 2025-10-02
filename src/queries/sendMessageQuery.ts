@@ -12,6 +12,7 @@ export type IncomingInput = {
   leadEmail?: string;
   action?: IAction;
   humanInput?: Record<string, unknown>;
+  context?: Record<string, any>;
 };
 
 type BaseRequest = {

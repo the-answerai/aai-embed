@@ -141,6 +141,7 @@ export type BotProps = {
   apiHost?: string;
   onRequest?: (request: RequestInit) => Promise<void>;
   chatflowConfig?: Record<string, unknown>;
+  getContext?: () => Record<string, any>;
   sourceBubble?: {
     hideSources?: boolean;
     label?: string;
@@ -1049,6 +1050,8 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
     if (action) body.action = action;
 
     if (humanInput) body.humanInput = humanInput;
+
+    if (props.getContext) body.context = props.getContext();
 
     if (isChatFlowAvailableToStream()) {
       fetchResponseFromEventStream(props.chatflowid, body);
