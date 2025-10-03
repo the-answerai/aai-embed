@@ -87,7 +87,7 @@ export const Full = (props: FullProps, { element }: { element: HTMLElement }) =>
             chatflowConfig={props.chatflowConfig}
             apiHost={props.apiHost}
             onRequest={props.onRequest}
-            getContext={props.getContext}
+            getTrackingMetadata={props.getTrackingMetadata}
             isFullPage={true}
             observersConfig={props.observersConfig}
             starterPromptFontSize={props.theme?.chatWindow?.starterPromptFontSize}
