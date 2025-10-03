@@ -141,7 +141,7 @@ export type BotProps = {
   apiHost?: string;
   onRequest?: (request: RequestInit) => Promise<void>;
   chatflowConfig?: Record<string, unknown>;
-  getTrackingMetadata?: () => Record<string, any>;
+  getTrackingMetadata?: () => Promise<Record<string, any>>;
   sourceBubble?: {
     hideSources?: boolean;
     label?: string;
@@ -1051,7 +1051,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
 
     if (humanInput) body.humanInput = humanInput;
 
-    if (props.getTrackingMetadata) body.trackingMetadata = props.getTrackingMetadata();
+    if (props.getTrackingMetadata) body.trackingMetadata = await props.getTrackingMetadata();
 
     if (isChatFlowAvailableToStream()) {
       fetchResponseFromEventStream(props.chatflowid, body);
