@@ -152,6 +152,7 @@ export const Bubble = (props: BubbleProps) => {
               apiHost={props.apiHost}
               onRequest={props.onRequest}
               getTrackingMetadata={props.getTrackingMetadata}
+              getChatflowConfig={props.getChatflowConfig}
               observersConfig={props.observersConfig}
               clearChatOnReload={bubbleProps.theme?.chatWindow?.clearChatOnReload}
               disclaimer={bubbleProps.theme?.disclaimer}

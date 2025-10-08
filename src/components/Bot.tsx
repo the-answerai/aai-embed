@@ -33,7 +33,7 @@ import { CancelButton } from './buttons/CancelButton';
 import { cancelAudioRecording, startAudioRecording, stopAudioRecording } from '@/utils/audioRecording';
 import { LeadCaptureBubble } from '@/components/bubbles/LeadCaptureBubble';
 import { removeLocalStorageChatHistory, getLocalStorageChatflow, setLocalStorageChatflow, setCookie, getCookie } from '@/utils';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, merge } from 'lodash';
 import { FollowUpPromptBubble } from '@/components/bubbles/FollowUpPromptBubble';
 import { fetchEventSource, EventStreamContentType } from '@microsoft/fetch-event-source';
 
@@ -141,6 +141,7 @@ export type BotProps = {
   apiHost?: string;
   onRequest?: (request: RequestInit) => Promise<void>;
   chatflowConfig?: Record<string, unknown>;
+  getChatflowConfig?: () => Promise<Record<string, unknown>>;
   getTrackingMetadata?: () => Promise<Record<string, any>>;
   sourceBubble?: {
     hideSources?: boolean;
@@ -1043,7 +1044,23 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
 
     if (uploads && uploads.length > 0) body.uploads = uploads;
 
-    if (props.chatflowConfig) body.overrideConfig = props.chatflowConfig;
+    if (props.chatflowConfig || props.getChatflowConfig) {
+      const mergedConfig = {};
+      if (props.chatflowConfig) {
+        merge(mergedConfig, props.chatflowConfig);
+      }
+      if (props.getChatflowConfig) {
+        try {
+          const dynamicConfig = await props.getChatflowConfig();
+          if (dynamicConfig && typeof dynamicConfig === 'object') {
+            merge(mergedConfig, dynamicConfig);
+          }
+        } catch (error) {
+          console.error('Error calling getChatflowConfig:', error);
+        }
+      }
+      body.overrideConfig = mergedConfig;
+    }
 
     if (leadEmail()) body.leadEmail = leadEmail();
 

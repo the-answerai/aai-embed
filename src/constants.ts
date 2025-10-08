@@ -6,6 +6,7 @@ export const defaultBotProps: BubbleProps = {
   onRequest: undefined,
   chatflowConfig: undefined,
   getTrackingMetadata: undefined,
+  getChatflowConfig: undefined,
   theme: undefined,
   observersConfig: undefined,
 };
