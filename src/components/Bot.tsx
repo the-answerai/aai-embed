@@ -524,11 +524,6 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
   const [uploadedFiles, setUploadedFiles] = createSignal<{ file: File; type: string }[]>([]);
   const [fullFileUploadAllowedTypes, setFullFileUploadAllowedTypes] = createSignal('*');
 
-  createMemo(() => {
-    const customerId = (props.chatflowConfig?.vars as any)?.customerId;
-    setChatId(customerId ? `${customerId.toString()}+${uuidv4()}` : uuidv4());
-  });
-
   onMount(() => {
     if (botProps?.observersConfig) {
       const { observeUserInput, observeLoading, observeMessages, observeStreamEnd } = botProps.observersConfig;
@@ -1286,8 +1281,16 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
     }
 
     const chatMessage = getLocalStorageChatflow(props.chatflowid);
+    const customerId = (props.chatflowConfig?.vars as any)?.customerId;
+
+    // Initialize chatId from localStorage or generate new one
+    if (chatMessage?.chatId) {
+      setChatId(chatMessage.chatId);
+    } else {
+      setChatId(customerId ? `${customerId.toString()}+${uuidv4()}` : uuidv4());
+    }
+
     if (chatMessage && Object.keys(chatMessage).length) {
-      if (chatMessage.chatId) setChatId(chatMessage.chatId);
       const savedLead = chatMessage.lead;
       if (savedLead) {
         setIsLeadSaved(!!savedLead);
