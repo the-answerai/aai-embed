@@ -15,13 +15,14 @@ export const sendRequest = async <ResponseData>(
         type?: string;
         headers?: Record<string, any>;
         formData?: FormData;
+        apiKey?: string;
         onRequest?: (request: RequestInit) => Promise<void>;
       }
     | string,
 ): Promise<{ data?: ResponseData; error?: Error }> => {
   try {
     const url = typeof params === 'string' ? params : params.url;
-    const token = sessionStorage.getItem('access_token');
+    const token = typeof params !== 'string' && params.apiKey ? params.apiKey : sessionStorage.getItem('access_token');
     const headers = {
       ...(typeof params !== 'string' && isDefined(params.body)
         ? {

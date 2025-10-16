@@ -86,6 +86,7 @@ export const Full = (props: FullProps, { element }: { element: HTMLElement }) =>
             chatflowid={props.chatflowid}
             chatflowConfig={props.chatflowConfig}
             apiHost={props.apiHost}
+            apiKey={props.apiKey}
             onRequest={props.onRequest}
             getTrackingMetadata={props.getTrackingMetadata}
             getChatflowConfig={props.getChatflowConfig}

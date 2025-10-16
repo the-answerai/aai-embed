@@ -17,6 +17,7 @@ export type IncomingInput = {
 
 type BaseRequest = {
   apiHost?: string;
+  apiKey?: string;
   onRequest?: (request: RequestInit) => Promise<void>;
 };
 
@@ -47,6 +48,7 @@ export type UpdateFeedbackRequest = BaseRequest & {
 export type UpsertRequest = BaseRequest & {
   chatflowid: string;
   apiHost?: string;
+  apiKey?: string;
   formData: FormData;
 };
 
@@ -62,31 +64,34 @@ export type LeadCaptureRequest = BaseRequest & {
   body: Partial<LeadCaptureInput>;
 };
 
-export const sendFeedbackQuery = ({ chatflowid, apiHost = 'http://localhost:3000', body, onRequest }: CreateFeedbackRequest) =>
+export const sendFeedbackQuery = ({ chatflowid, apiHost = 'http://localhost:3000', body, onRequest, apiKey }: CreateFeedbackRequest) =>
   sendRequest({
     method: 'POST',
     url: `${apiHost}/api/v1/feedback/${chatflowid}`,
     body,
     onRequest: onRequest,
+    apiKey: apiKey,
   });
 
-export const updateFeedbackQuery = ({ id, apiHost = 'http://localhost:3000', body, onRequest }: UpdateFeedbackRequest) =>
+export const updateFeedbackQuery = ({ id, apiHost = 'http://localhost:3000', body, onRequest, apiKey }: UpdateFeedbackRequest) =>
   sendRequest({
     method: 'PUT',
     url: `${apiHost}/api/v1/feedback/${id}`,
     body,
     onRequest: onRequest,
+    apiKey: apiKey,
   });
 
-export const sendMessageQuery = ({ chatflowid, apiHost = 'http://localhost:3000', body, onRequest }: MessageRequest) =>
+export const sendMessageQuery = ({ chatflowid, apiHost = 'http://localhost:3000', body, onRequest, apiKey }: MessageRequest) =>
   sendRequest<any>({
     method: 'POST',
     url: `${apiHost}/api/v1/prediction/${chatflowid}`,
     body,
     onRequest: onRequest,
+    apiKey: apiKey,
   });
 
-export const createAttachmentWithFormData = ({ chatflowid, apiHost = 'http://localhost:3000', formData, onRequest }: UpsertRequest) =>
+export const createAttachmentWithFormData = ({ chatflowid, apiHost = 'http://localhost:3000', formData, onRequest, apiKey }: UpsertRequest) =>
   sendRequest({
     method: 'POST',
     url: `${apiHost}/api/v1/attachments/${chatflowid}/${formData.get('chatId')}`,
@@ -95,9 +100,10 @@ export const createAttachmentWithFormData = ({ chatflowid, apiHost = 'http://loc
       'Content-Type': 'multipart/form-data',
     },
     onRequest: onRequest,
+    apiKey: apiKey,
   });
 
-export const upsertVectorStoreWithFormData = ({ chatflowid, apiHost = 'http://localhost:3000', formData, onRequest }: UpsertRequest) =>
+export const upsertVectorStoreWithFormData = ({ chatflowid, apiHost = 'http://localhost:3000', formData, onRequest, apiKey }: UpsertRequest) =>
   sendRequest({
     method: 'POST',
     url: `${apiHost}/api/v1/vector/upsert/${chatflowid}`,
@@ -106,35 +112,40 @@ export const upsertVectorStoreWithFormData = ({ chatflowid, apiHost = 'http://lo
       'Content-Type': 'multipart/form-data',
     },
     onRequest: onRequest,
+    apiKey: apiKey,
   });
 
-export const getChatbotConfig = ({ chatflowid, apiHost = 'http://localhost:3000', onRequest }: MessageRequest) =>
+export const getChatbotConfig = ({ chatflowid, apiHost = 'http://localhost:3000', onRequest, apiKey }: MessageRequest) =>
   sendRequest<any>({
     method: 'GET',
     url: `${apiHost}/api/v1/public-chatbotConfig/${chatflowid}`,
     onRequest: onRequest,
+    apiKey: apiKey,
   });
 
-export const isStreamAvailableQuery = ({ chatflowid, apiHost = 'http://localhost:3000', onRequest }: MessageRequest) =>
+export const isStreamAvailableQuery = ({ chatflowid, apiHost = 'http://localhost:3000', onRequest, apiKey }: MessageRequest) =>
   sendRequest<any>({
     method: 'GET',
     url: `${apiHost}/api/v1/chatflows-streaming/${chatflowid}`,
     onRequest: onRequest,
+    apiKey: apiKey,
   });
 
-export const sendFileDownloadQuery = ({ apiHost = 'http://localhost:3000', body, onRequest }: MessageRequest) =>
+export const sendFileDownloadQuery = ({ apiHost = 'http://localhost:3000', body, onRequest, apiKey }: MessageRequest) =>
   sendRequest<any>({
     method: 'POST',
     url: `${apiHost}/api/v1/openai-assistants-file/download`,
     body,
     type: 'blob',
     onRequest: onRequest,
+    apiKey: apiKey,
   });
 
-export const addLeadQuery = ({ apiHost = 'http://localhost:3000', body, onRequest }: LeadCaptureRequest) =>
+export const addLeadQuery = ({ apiHost = 'http://localhost:3000', body, onRequest, apiKey }: LeadCaptureRequest) =>
   sendRequest<any>({
     method: 'POST',
     url: `${apiHost}/api/v1/leads/`,
     body,
     onRequest: onRequest,
+    apiKey: apiKey,
   });
