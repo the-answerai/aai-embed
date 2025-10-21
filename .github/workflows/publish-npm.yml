@@ -133,7 +133,7 @@ jobs:
 
       - name: Push changes and tags
         run: |
-          git push origin main
+          git push origin a-main
           git push origin --tags
           echo "Changes and tags pushed to origin"
 
