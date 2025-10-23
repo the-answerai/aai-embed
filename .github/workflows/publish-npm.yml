@@ -90,7 +90,7 @@ jobs:
       - name: Update package metadata
         run: |
           # Update package name to scoped name
-          node -e "const pkg = require('./package.json'); pkg.name = '@answerai/aai-embed'; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
+          node -e "const pkg = require('./package.json'); pkg.name = 'aai-embed'; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
 
           # Add publishConfig
           node -e "const pkg = require('./package.json'); pkg.publishConfig = { access: 'public' }; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
@@ -139,7 +139,7 @@ jobs:
 
       - name: Summary
         run: |
-          echo "✅ Published @answerai/aai-embed@${{ steps.version.outputs.new_version }} to npm"
+          echo "✅ Published aai-embed@${{ steps.version.outputs.new_version }} to npm"
           echo "✅ Created tag v${{ steps.version.outputs.new_version }}"
           echo ""
           echo "Next steps:"
