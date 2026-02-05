@@ -92,13 +92,20 @@ export const TextInput = (props: TextInputProps) => {
       }
     } else if (props.enableInputHistory) {
       if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        const previousInput = inputHistory().getPreviousInput(props.inputValue);
-        props.onInputChange(previousInput);
+        const cursorPosition = inputRef?.selectionStart ?? 0;
+        if (cursorPosition === 0) {
+          e.preventDefault();
+          const previousInput = inputHistory().getPreviousInput(props.inputValue);
+          props.onInputChange(previousInput);
+        }
       } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        const nextInput = inputHistory().getNextInput();
-        props.onInputChange(nextInput);
+        const cursorPosition = inputRef?.selectionStart ?? 0;
+        const textLength = props.inputValue.length;
+        if (cursorPosition === textLength && inputHistory().getCurrentIndex() > -1) {
+          e.preventDefault();
+          const nextInput = inputHistory().getNextInput();
+          props.onInputChange(nextInput);
+        }
       }
     }
   };
