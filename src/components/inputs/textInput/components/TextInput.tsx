@@ -96,9 +96,12 @@ export const TextInput = (props: TextInputProps) => {
         const previousInput = inputHistory().getPreviousInput(props.inputValue);
         props.onInputChange(previousInput);
       } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        const nextInput = inputHistory().getNextInput();
-        props.onInputChange(nextInput);
+        // Only navigate forward if already in history mode (after ArrowUp)
+        if (inputHistory().getCurrentIndex() > -1) {
+          e.preventDefault();
+          const nextInput = inputHistory().getNextInput();
+          props.onInputChange(nextInput);
+        }
       }
     }
   };
