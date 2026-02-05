@@ -10,7 +10,10 @@ export class ChatInputHistory {
   private tempInput = '';
   private maxHistory: number;
 
-  constructor(private getMaxHistory: () => number = () => 10, private storage: ChatHistoryStorage = localStorage) {
+  constructor(
+    private getMaxHistory: () => number = () => 10,
+    private storage: ChatHistoryStorage = localStorage,
+  ) {
     this.maxHistory = this.getMaxHistory() ?? 10;
     this.loadHistory();
   }
