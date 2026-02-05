@@ -368,10 +368,10 @@ export const WorkflowTreeView = (props: WorkflowTreeViewProps) => {
         const iterationStatus = childNodes.some((n: any) => n.status === 'ERROR')
           ? 'ERROR'
           : childNodes.some((n: any) => n.status === 'INPROGRESS' || n.status === 'RUNNING')
-            ? 'INPROGRESS'
-            : childNodes.every((n: any) => n.status === 'FINISHED')
-              ? 'FINISHED'
-              : 'PENDING';
+          ? 'INPROGRESS'
+          : childNodes.every((n: any) => n.status === 'FINISHED')
+          ? 'FINISHED'
+          : 'PENDING';
 
         // Create the virtual node and add to nodeMap
         const virtualNode = {
