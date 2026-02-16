@@ -4,7 +4,7 @@ import { FormEvent, LeadsConfig, MessageType } from '@/components/Bot';
 import { addLeadQuery, LeadCaptureInput } from '@/queries/sendMessageQuery';
 import { SaveLeadButton } from '@/components/buttons/LeadCaptureButtons';
 import { Avatar } from '@/components/avatars/Avatar';
-import { getLocalStorageChatflow, setLocalStorageChatflow } from '@/utils';
+import { getLocalStorageChatflow, setLocalStorageChatflow, setSessionStorageChatflow } from '@/utils';
 
 type Props = {
   message: MessageType;
@@ -65,13 +65,15 @@ export const LeadCaptureBubble = (props: Props) => {
       });
 
       if (result.data) {
-        setLocalStorageChatflow(props.chatflowid, props.chatId, {
+        const leadData = {
           lead: {
             name: leadName(),
             email: leadEmail(),
             phone: leadPhone(),
           },
-        });
+        };
+        setSessionStorageChatflow(props.chatflowid, props.chatId, leadData);
+        setLocalStorageChatflow(props.chatflowid, props.chatId, leadData);
         props.setIsLeadSaved(true);
         props.setLeadEmail(leadEmail());
       }

@@ -182,7 +182,7 @@ export const BotBubble = (props: Props) => {
   };
 
   const saveToLocalStorage = (rating: FeedbackRatingType) => {
-    const chatDetails = localStorage.getItem(`${props.chatflowid}_EXTERNAL`);
+    const chatDetails = sessionStorage.getItem(`${props.chatflowid}_EXTERNAL`);
     if (!chatDetails) return;
     try {
       const parsedDetails = JSON.parse(chatDetails);
@@ -190,7 +190,9 @@ export const BotBubble = (props: Props) => {
       const message = messages.find((msg) => msg.messageId === props.message.messageId);
       if (!message) return;
       message.rating = rating;
-      localStorage.setItem(`${props.chatflowid}_EXTERNAL`, JSON.stringify({ ...parsedDetails, chatHistory: messages }));
+      const updated = JSON.stringify({ ...parsedDetails, chatHistory: messages });
+      sessionStorage.setItem(`${props.chatflowid}_EXTERNAL`, updated);
+      localStorage.setItem(`${props.chatflowid}_EXTERNAL`, updated);
     } catch (e) {
       return;
     }

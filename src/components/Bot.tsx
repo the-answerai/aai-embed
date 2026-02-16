@@ -32,7 +32,16 @@ import { CircleDotIcon, SparklesIcon, TrashIcon } from './icons';
 import { CancelButton } from './buttons/CancelButton';
 import { cancelAudioRecording, startAudioRecording, stopAudioRecording } from '@/utils/audioRecording';
 import { LeadCaptureBubble } from '@/components/bubbles/LeadCaptureBubble';
-import { removeLocalStorageChatHistory, getLocalStorageChatflow, setLocalStorageChatflow, setCookie, getCookie } from '@/utils';
+import {
+  removeLocalStorageChatHistory,
+  removeSessionStorageChatHistory,
+  getLocalStorageChatflow,
+  getSessionStorageChatflow,
+  setLocalStorageChatflow,
+  setSessionStorageChatflow,
+  setCookie,
+  getCookie,
+} from '@/utils';
 import { cloneDeep, merge } from 'lodash';
 import { FollowUpPromptBubble } from '@/components/bubbles/FollowUpPromptBubble';
 import { fetchEventSource, EventStreamContentType } from '@microsoft/fetch-event-source';
@@ -572,6 +581,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
       }
       return item;
     });
+    setSessionStorageChatflow(props.chatflowid, chatId(), { chatHistory: messages });
     setLocalStorageChatflow(props.chatflowid, chatId(), { chatHistory: messages });
   };
 
@@ -869,6 +879,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
             closeResponse();
             break;
           case 'end':
+            setSessionStorageChatflow(chatflowid, chatId);
             setLocalStorageChatflow(chatflowid, chatId);
             closeResponse();
             break;
@@ -1210,6 +1221,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
 
   const clearChat = () => {
     try {
+      removeSessionStorageChatHistory(props.chatflowid);
       removeLocalStorageChatHistory(props.chatflowid);
       setChatId(
         (props.chatflowConfig?.vars as any)?.customerId ? `${(props.chatflowConfig?.vars as any).customerId.toString()}+${uuidv4()}` : uuidv4(),
@@ -1285,7 +1297,8 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
       setDisclaimerPopupOpen(false);
     }
 
-    const chatMessage = getLocalStorageChatflow(props.chatflowid);
+    const sessionMessage = getSessionStorageChatflow(props.chatflowid);
+    const chatMessage = Object.keys(sessionMessage).length ? sessionMessage : getLocalStorageChatflow(props.chatflowid);
     const customerId = (props.chatflowConfig?.vars as any)?.customerId;
 
     // Initialize chatId from localStorage or generate new one
@@ -1296,7 +1309,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
     }
 
     if (chatMessage && Object.keys(chatMessage).length) {
-      const savedLead = chatMessage.lead;
+      const savedLead = chatMessage.lead || getLocalStorageChatflow(props.chatflowid)?.lead;
       if (savedLead) {
         setIsLeadSaved(!!savedLead);
         setLeadEmail(savedLead.email);
@@ -1330,6 +1343,11 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
 
       const filteredMessages = loadedMessages.filter((message) => message.type !== 'leadCaptureMessage');
       setMessages([...filteredMessages]);
+
+      // Seed sessionStorage if we loaded from localStorage (returning user in new tab)
+      if (!Object.keys(sessionMessage).length && chatMessage?.chatHistory?.length) {
+        setSessionStorageChatflow(props.chatflowid, chatId(), { chatHistory: chatMessage.chatHistory });
+      }
     }
 
     // Determine if particular chatflow is available for streaming
