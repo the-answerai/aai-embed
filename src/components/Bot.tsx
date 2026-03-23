@@ -799,7 +799,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
   };
 
   const fetchResponseFromEventStream = async (chatflowid: string, params: any) => {
-    const chatId = params.chatId;
+    const requestChatId = params.chatId;
     const input = params.question;
     params.streaming = true;
     console.log('[fetchResponseFromEventStream]', { botProps, params, chatflowid, props });
@@ -879,8 +879,8 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
             closeResponse();
             break;
           case 'end':
-            setSessionStorageChatflow(chatflowid, chatId);
-            setLocalStorageChatflow(chatflowid, chatId);
+            setSessionStorageChatflow(chatflowid, chatId() || requestChatId);
+            setLocalStorageChatflow(chatflowid, chatId() || requestChatId);
             closeResponse();
             break;
         }
@@ -1298,18 +1298,16 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
     }
 
     const sessionMessage = getSessionStorageChatflow(props.chatflowid);
-    const chatMessage = Object.keys(sessionMessage).length ? sessionMessage : getLocalStorageChatflow(props.chatflowid);
+    const localStorageMessage = getLocalStorageChatflow(props.chatflowid);
+    const chatMessage = Object.keys(sessionMessage).length ? sessionMessage : localStorageMessage;
     const customerId = (props.chatflowConfig?.vars as any)?.customerId;
 
     // Initialize chatId from localStorage or generate new one
-    if (chatMessage?.chatId) {
-      setChatId(chatMessage.chatId);
-    } else {
-      setChatId(customerId ? `${customerId.toString()}+${uuidv4()}` : uuidv4());
-    }
+    const initialChatId = chatMessage?.chatId || (customerId ? `${customerId.toString()}+${uuidv4()}` : uuidv4());
+    setChatId(initialChatId);
 
     if (chatMessage && Object.keys(chatMessage).length) {
-      const savedLead = chatMessage.lead || getLocalStorageChatflow(props.chatflowid)?.lead;
+      const savedLead = chatMessage.lead || localStorageMessage?.lead;
       if (savedLead) {
         setIsLeadSaved(!!savedLead);
         setLeadEmail(savedLead.email);
@@ -1345,8 +1343,11 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
       setMessages([...filteredMessages]);
 
       // Seed sessionStorage if we loaded from localStorage (returning user in new tab)
-      if (!Object.keys(sessionMessage).length && chatMessage?.chatHistory?.length) {
-        setSessionStorageChatflow(props.chatflowid, chatId(), { chatHistory: chatMessage.chatHistory });
+      if (!Object.keys(sessionMessage).length && (chatMessage?.chatHistory?.length || savedLead)) {
+        setSessionStorageChatflow(props.chatflowid, initialChatId, {
+          ...(chatMessage?.chatHistory?.length ? { chatHistory: chatMessage.chatHistory } : {}),
+          ...(savedLead ? { lead: savedLead } : {}),
+        });
       }
     }
 

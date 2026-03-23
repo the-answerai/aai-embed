@@ -182,7 +182,7 @@ export const BotBubble = (props: Props) => {
   };
 
   const saveToLocalStorage = (rating: FeedbackRatingType) => {
-    const chatDetails = sessionStorage.getItem(`${props.chatflowid}_EXTERNAL`);
+    const chatDetails = sessionStorage.getItem(`${props.chatflowid}_EXTERNAL`) || localStorage.getItem(`${props.chatflowid}_EXTERNAL`);
     if (!chatDetails) return;
     try {
       const parsedDetails = JSON.parse(chatDetails);
