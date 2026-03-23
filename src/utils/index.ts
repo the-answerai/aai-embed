@@ -124,6 +124,51 @@ export const removeLocalStorageChatHistory = (chatflowid: string) => {
   }
 };
 
+export const setSessionStorageChatflow = (chatflowid: string, chatId: string, saveObj: Record<string, any> = {}) => {
+  const chatDetails = sessionStorage.getItem(`${chatflowid}_EXTERNAL`);
+  const obj = { ...saveObj };
+  if (chatId) obj.chatId = chatId;
+
+  if (!chatDetails) {
+    sessionStorage.setItem(`${chatflowid}_EXTERNAL`, JSON.stringify(obj));
+  } else {
+    try {
+      const parsedChatDetails = JSON.parse(chatDetails);
+      sessionStorage.setItem(`${chatflowid}_EXTERNAL`, JSON.stringify({ ...parsedChatDetails, ...obj }));
+    } catch (e) {
+      sessionStorage.setItem(`${chatflowid}_EXTERNAL`, JSON.stringify(obj));
+    }
+  }
+};
+
+export const getSessionStorageChatflow = (chatflowid: string) => {
+  const chatDetails = sessionStorage.getItem(`${chatflowid}_EXTERNAL`);
+  if (!chatDetails) return {};
+  try {
+    return JSON.parse(chatDetails);
+  } catch (e) {
+    return {};
+  }
+};
+
+export const removeSessionStorageChatHistory = (chatflowid: string) => {
+  const chatDetails = sessionStorage.getItem(`${chatflowid}_EXTERNAL`);
+  if (!chatDetails) return;
+  try {
+    const parsedChatDetails = JSON.parse(chatDetails);
+    if (parsedChatDetails.lead) {
+      // Dont remove lead when chat is cleared
+      const obj = { lead: parsedChatDetails.lead };
+      sessionStorage.removeItem(`${chatflowid}_EXTERNAL`);
+      sessionStorage.setItem(`${chatflowid}_EXTERNAL`, JSON.stringify(obj));
+    } else {
+      sessionStorage.removeItem(`${chatflowid}_EXTERNAL`);
+    }
+  } catch (e) {
+    return;
+  }
+};
+
 export const getBubbleButtonSize = (size: 'small' | 'medium' | 'large' | number | undefined) => {
   if (!size) return 48;
   if (typeof size === 'number') return size;
